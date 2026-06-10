@@ -1,0 +1,72 @@
+[project]
+name = "9-1-home-work"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Your Name", email = "you@example.com"}
+]
+requires-python = "^3.13"
+dependencies = [
+]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[dependency-groups]
+lint = [
+    "flake8 (>=7.3.0,<8.0.0)",
+    "flake8-toml (>=0.1.0)",
+    "mypy (>=2.1.0,<3.0.0)",
+    "black (>=26.5.1,<27.0.0)",
+    "isort (>=8.0.1,<9.0.0)"
+]
+
+
+[tool.flake8]
+max-line-length = 119
+extend-ignore = ["E203", "W503"]
+exclude = [
+    ".git",
+    "__pycache__",
+    "venv",
+    ".venv",
+    "poetry.lock",
+    "pyproject.toml"
+]
+max-complexity = 10
+show-source = true
+statistics = true
+
+[tool.black]
+line-length = 119
+target-version = ['py313']
+exclude = '''
+/(
+    \.git
+
+
+  | __pycache__
+  | \.venv
+  | venv
+
+
+  | poetry\.lock
+  | pyproject\.toml
+)/
+'''
+
+
+[tool.isort]
+profile = "black"
+line_length = 119
+skip = [".venv", "venv", "poetry.lock", "pyproject.toml"]
+
+
+[tool.mypy]
+python_version = "3.13"
+show_error_codes = true
+warn_unused_ignores = true
+warn_unreachable = true
+strict = true
+ignore_missing_imports = true
