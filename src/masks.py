@@ -4,7 +4,8 @@ def get_mask_card_number(card_number: str) -> str:
 
     return " ".join([masked[i : i + 4] for i in range(0, len(masked), 4)])
 
-    """Разбиваем по блокам по 4 символа"""
+
+"""Разбиваем по блокам по 4 символа"""
 
 
 def get_mask_account(account_number: str) -> str:
