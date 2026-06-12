@@ -1,3 +1,6 @@
+from datetime import datetime
+
+
 def get_mask_card(card_number: str) -> str:
     """Маскирует номер карты в формат: XXXX XX** **** XXXX"""
     return f"{card_number[:4]} {card_number[4:6]}** **** {card_number[-4:]}"
@@ -26,9 +29,6 @@ def mask_account_card(info: str) -> str:
 
     """ Собираем название и замаскированный номер обратно в одну строку"""
     return f"{name} {masked_number}"
-
-
-from datetime import datetime
 
 
 def get_date(date_str: str) -> str:
