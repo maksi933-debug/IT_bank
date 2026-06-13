@@ -1,16 +1,6 @@
 from datetime import datetime
 
 
-def get_mask_card(card_number: str) -> str:
-    """Маскирует номер карты в формат: XXXX XX** **** XXXX"""
-    return f"{card_number[:4]} {card_number[4:6]}** **** {card_number[-4:]}"
-
-
-def get_mask_account(account_number: str) -> str:
-    """Маскирует номер счета в формат: **XXXX"""
-    return f"**{account_number[-4:]}"
-
-
 def mask_account_card(info: str) -> str:
     """Принимает строку с типом и номером карты/счета и возвращает её с маской."""
     fragment = info.split()
