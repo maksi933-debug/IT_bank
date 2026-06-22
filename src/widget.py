@@ -1,4 +1,5 @@
 from datetime import datetime
+from masks import get_mask_account, get_mask_card_number
 
 
 def mask_account_card(info: str) -> str:
@@ -15,7 +16,7 @@ def mask_account_card(info: str) -> str:
     if name.lower() == "счет":
         masked_number = get_mask_account(number)
     else:
-        masked_number = get_mask_card(number)
+        masked_number = get_mask_card_number(number)
 
     """ Собираем название и замаскированный номер обратно в одну строку"""
     return f"{name} {masked_number}"
