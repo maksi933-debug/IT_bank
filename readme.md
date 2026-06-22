@@ -5,6 +5,7 @@
 ```
 # Показывает несколько последних успешных банковских операций клиента
 # Умеет обрабатывать информацию как о картах, так и о счетах
+# Позволяет производить сортировку операций
 
 ```
 # Пример работы:
@@ -37,7 +38,7 @@ Visa Platinum 7000 79** **** 6361 # выход функции
 ```
 ***Пример:***
 
-![Текст описания](https://assets.simpleviewinc.com/simpleview/image/upload/c_fill,h_720,q_75,w_1400/v1/clients/newyorkcity/Coronavirus_Info_midtown_manhattan_skyline_nyc_3000x2000_364fa9b8-86ce-4f95-907a-4bd8ea32f232.jpg)
+![Текст описания](D:\Документы\Ромино\skypro\Учёба питон\PythonProject\10_1_home_work\LOGO_.png)
 
 ---
 

@@ -4,7 +4,7 @@ def filter_by_state(data: list[dict], state: str = "EXECUTED") -> str:
 
 
     return "\n".join(str(item) for item in filtered_items)
-    """Объединяем словари в одну строку, разделяя их символом переноса строки \n"""
+"""Объединяем словари в одну строку, разделяя их символом переноса строки \n"""
 
 
 if __name__ == "__main__":
