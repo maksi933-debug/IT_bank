@@ -1,4 +1,4 @@
-<img alt="LOGO_.png" height="300" src="LOGO_.png" width="300"/>
+<img alt="LOGO_.png" height="200" src="LOGO_.png" width="200"/>
 
 # Виджет банковских операций
 Данный проект позволит отображать операции клиента.
