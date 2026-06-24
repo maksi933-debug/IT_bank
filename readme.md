@@ -5,8 +5,6 @@
 
 Домашняя работа 2 го модуля Skypro
 
-[<img alt="Ashutosh&#39;s github activity graph" src="https://activity-graph.herokuapp.com/graph?username=maksi933-debug"/>](https://github.com/maksi933-debug/IT_bank)
-
 ## Функционал
 ```
 - Показывает несколько последних успешных банковских операций клиента
@@ -26,24 +24,20 @@ Visa Platinum 7000 79** **** 6361 # выход функции
 id': 939719570, 'state': 'EXECUTED','date': '2018-06-30T02:08:58.425572
 
 id': 41428829, 'state': 'EXECUTED', 'date': '2019-07-03T18:35:29.512364
-##### Заголовок пятого уровня
-###### Заголовок шестого уровня
----
 
 
 ## Ссылки
 ```
 https://github.com/maksi933-debug/IT_bank.git
 ```
-***Пример:***
+
 
 [IT-bank](https://github.com/maksi933-debug/IT_bank.git)
 
 ## Установка
 1.  Клонируйте репозиторий:
     ```bash
-    git clone https://github.com/maksi933-debug/IT_bank.git
-        ```
+    git clone https://github.com/maksi933-debug/IT_bank.git       
 2.  Создайте и активируйте виртуальное окружение:
     ```bash
     python -m venv venv
