@@ -5,7 +5,7 @@
 
 Домашняя работа 2 го модуля Skypro
 
-[![Ashutosh's github activity graph](https://activity-graph.herokuapp.com/graph?username=maksi933-debug)](https://github.com/maksi933-debug/IT_bank)
+[<img alt="Ashutosh&#39;s github activity graph" src="https://activity-graph.herokuapp.com/graph?username=maksi933-debug"/>](https://github.com/maksi933-debug/IT_bank)
 
 ## Функционал
 ```
