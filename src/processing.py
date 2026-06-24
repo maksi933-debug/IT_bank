@@ -27,25 +27,24 @@ if __name__ == "__main__":
         },
     ]
 
-    # 1. Тест со значением по умолчанию ('EXECUTED')
+
     print("Фильтр по умолчанию (EXECUTED):")
     print(filter_by_state(mock_data))
 
-    # 2. Тест со значением 'CANCELED'
+
     print("\nФильтр по статусу CANCELED:")
     print(filter_by_state(mock_data, "CANCELED"))
 
 
     def sort_by_date(data: list[dict], reverse: bool = True) -> list[dict]:
         """Сортирует список словарей по дате.
-
         По умолчанию сортирует по убыванию (сначала самые свежие).
         Если передать reverse=False, отсортирует по возрастанию.
         """
         return sorted(data, key=lambda item: item.get("date", ""), reverse=reverse)
 
 
-    # Блок проверки работы функций
+    """ Блок проверки работы функций"""
     if __name__ == "__main__":
         mock_data = [
             {"id": 41428829, "state": "EXECUTED", "date": "2019-07-03T18:35:29.512364"},
@@ -56,7 +55,7 @@ if __name__ == "__main__":
 
         print("--- Проверка функции sort_by_date (по убыванию) ---")
         sorted_data_desc = sort_by_date(mock_data)
-        # Выводим результат так, чтобы каждый словарь начинался со следующей строки
+        """Выводим результат так, чтобы каждый словарь начинался со следующей строки"""
         for item in sorted_data_desc:
             print(item)
 
