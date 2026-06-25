@@ -1,0 +1,42 @@
+from typing import Any, Dict, List
+
+
+def filter_by_state(data: List[Dict[str, Any]], state: str = "EXECUTED") -> str:
+    """Фильтирует список словарей по заданному статусу state.
+    Возвращает их в виде строки, где каждый элемент записан с новой строки."""
+
+    filtered_items = [item for item in data if item.get("state") == state]
+    return "\n".join(str(item) for item in filtered_items)
+
+
+def sort_by_date(data: List[Dict[str, Any]], is_reverse: bool = True) -> List[Dict[str, Any]]:
+    """Сортирует список словарей по ключу 'date'. По умолчанию сортирует по убыванию (сначала самые свежие).
+    Если передать reverse=False, отсортирует по возрастанию."""
+
+    return sorted(data, key=lambda item: item.get("date", ""), reverse=is_reverse)
+
+
+if __name__ == "__main__":
+    """Тестовые данные для проверки обеих функций"""
+    mock_data = [
+        {"id": 41428829, "state": "EXECUTED", "date": "2019-07-03T18:35:29.512364"},
+        {"id": 594226727, "state": "CANCELED", "date": "2018-09-12T21:27:25.241689"},
+        {"id": 939719570, "state": "EXECUTED", "date": "2018-06-30T02:08:58.425572"},
+        {"id": 615064591, "state": "CANCELED", "date": "2018-10-14T08:21:33.419441"},
+    ]
+
+    print("--- Проверка функции filter_by_state ---")
+    print("Фильтр по умолчанию (EXECUTED):")
+    print(filter_by_state(mock_data))
+    print("\nФильтр по статусу CANCELED:")
+    print(filter_by_state(mock_data, "CANCELED"))
+
+    print("\n--- Проверка функции sort_by_date (по убыванию) ---")
+    sorted_data_desc = sort_by_date(mock_data)
+    for item in sorted_data_desc:
+        print(item)
+
+    print("\n--- Проверка функции sort_by_date (по возрастанию) ---")
+    sorted_data_asc = sort_by_date(mock_data, is_reverse=False)
+    for item in sorted_data_asc:
+        print(item)
