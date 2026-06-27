@@ -20,8 +20,7 @@ def sort_by_date(data: List[Dict[str, Any]], is_reverse: bool = True) -> List[Di
 
 def main() -> None:
     """Генерация тестовых данных и демонстрация работы функций фильтрации и сортировки."""
-    # Пересмотрено именование: вместо mock_data используем понятное и чистое sample_transactions
-    sample_transactions: List[Dict[str, Any]] = [
+        sample_transactions: List[Dict[str, Any]] = [
         {"id": 41428829, "state": "EXECUTED", "date": "2019-07-03T18:35:29.512364"},
         {"id": 594226727, "state": "CANCELED", "date": "2018-09-12T21:27:25.241689"},
         {"id": 939719570, "state": "EXECUTED", "date": "2018-06-30T02:08:58.425572"},
@@ -40,8 +39,7 @@ def main() -> None:
         print(transaction)
 
     print("\n--- Проверка функции sort_by_date (по возрастанию) ---")
-    # Переменная для флага переименована с использованием явного префикса is_
-    is_ascending_order: bool = False
+       is_ascending_order: bool = False
     transactions_by_date_asc: List[Dict[str, Any]] = sort_by_date(
         sample_transactions, is_reverse=is_ascending_order
     )
