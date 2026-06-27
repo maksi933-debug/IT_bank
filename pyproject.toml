@@ -21,6 +21,9 @@ lint = [
     "isort (>=8.0.1,<9.0.0)",
     "flake8-pyproject (>=1.2.4,<2.0.0)"
 ]
+dev = [
+    "flake8 (>=7.3.0,<8.0.0)"
+]
 
 
 [tool.flake8]
