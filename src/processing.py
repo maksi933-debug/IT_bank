@@ -1,13 +1,12 @@
 from typing import Any, Dict, List
 
 
-def filter_by_state(data: List[Dict[str, Any]], state: str = "EXECUTED") -> str:
+def filter_by_state(data: List[Dict[str, Any]], state: str = "EXECUTED") -> List[Dict[str, Any]]:
     """Фильтрует список словарей по заданному статусу state.
 
-    Возвращает элементы в виде строки, где каждый элемент записан с новой строки.
+    Возвращает отфильтрованный список словарей.
     """
-    filtered_items: List[Dict[str, Any]] = [item for item in data if item.get("state") == state]
-    return "\n".join(str(item) for item in filtered_items)
+    return [item for item in data if item.get("state") == state]
 
 
 def sort_by_date(data: List[Dict[str, Any]], is_reverse: bool = True) -> List[Dict[str, Any]]:
@@ -20,7 +19,8 @@ def sort_by_date(data: List[Dict[str, Any]], is_reverse: bool = True) -> List[Di
 
 def main() -> None:
     """Генерация тестовых данных и демонстрация работы функций фильтрации и сортировки."""
-        sample_transactions: List[Dict[str, Any]] = [
+
+    sample_transactions: List[Dict[str, Any]] = [
         {"id": 41428829, "state": "EXECUTED", "date": "2019-07-03T18:35:29.512364"},
         {"id": 594226727, "state": "CANCELED", "date": "2018-09-12T21:27:25.241689"},
         {"id": 939719570, "state": "EXECUTED", "date": "2018-06-30T02:08:58.425572"},
@@ -29,9 +29,14 @@ def main() -> None:
 
     print("--- Проверка функции filter_by_state ---")
     print("Фильтр по умолчанию (EXECUTED):")
-    print(filter_by_state(sample_transactions))
+    executed_transactions = filter_by_state(sample_transactions)
+    for transaction in executed_transactions:
+        print(transaction)
+
     print("\nФильтр по статусу CANCELED:")
-    print(filter_by_state(sample_transactions, "CANCELED"))
+    canceled_transactions = filter_by_state(sample_transactions, "CANCELED")
+    for transaction in canceled_transactions:
+        print(transaction)
 
     print("\n--- Проверка функции sort_by_date (по убыванию) ---")
     transactions_by_date_desc: List[Dict[str, Any]] = sort_by_date(sample_transactions)
@@ -39,7 +44,7 @@ def main() -> None:
         print(transaction)
 
     print("\n--- Проверка функции sort_by_date (по возрастанию) ---")
-       is_ascending_order: bool = False
+    is_ascending_order: bool = False
     transactions_by_date_asc: List[Dict[str, Any]] = sort_by_date(
         sample_transactions, is_reverse=is_ascending_order
     )
