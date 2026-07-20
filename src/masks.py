@@ -10,8 +10,7 @@ def get_mask_card_number(card_number: str) -> str:
     if len(card_number) != 16 or not card_number.isdigit():
         raise ValueError("Номер карты должен состоять ровно из 16 цифр")
 
-    # Исправлен срез: card_number[4:6] изменен на card_number[4:8]
-    # Теперь берутся цифры с 5-й по 8-ю, из которых отображаются первые две, а вторые две заменяются на **
+
     return f"{card_number[:4]} {card_number[4:6]}** **** {card_number[12:]}"
 
 

@@ -17,7 +17,7 @@ def mask_account_card(info: str) -> str:
 
     number = fragment[-1]
 
-    # Всё, что идет до номера — это название (например, ["Visa", "Platinum"] или ["Счет"])
+    # Всё, что идет до номера это название (например, ["Visa", "Platinum"] или ["Счет"])
     name_fragment = fragment[:-1]
     name = " ".join(name_fragment)
 
