@@ -10,10 +10,11 @@ def filter_by_state(data: List[Dict[str, Any]], state: str = "EXECUTED") -> List
 
 
 def sort_by_date(data: List[Dict[str, Any]], is_reverse: bool = True) -> List[Dict[str, Any]]:
-    """Сортирует список словарей по ключу 'date'.
+    """Сортирует список словарей по дате.
 
-    По умолчанию сортирует по убыванию (сначала самые свежие).
+    Безопасно обрабатывает отсутствие ключа 'date' и вызывает TypeError при смешанных типах.
     """
+    # Использование .get("date", "") предотвратит KeyError
     return sorted(data, key=lambda item: item.get("date", ""), reverse=is_reverse)
 
 
@@ -45,9 +46,7 @@ def main() -> None:
 
     print("\n--- Проверка функции sort_by_date (по возрастанию) ---")
     is_ascending_order: bool = False
-    transactions_by_date_asc: List[Dict[str, Any]] = sort_by_date(
-        sample_transactions, is_reverse=is_ascending_order
-    )
+    transactions_by_date_asc: List[Dict[str, Any]] = sort_by_date(sample_transactions, is_reverse=is_ascending_order)
     for transaction in transactions_by_date_asc:
         print(transaction)
 
