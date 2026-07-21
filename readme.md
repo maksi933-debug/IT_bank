@@ -30,20 +30,20 @@
 ### Запуск тестов
 Чтобы запустить все тесты, выполните команду в корневой директории:
 ```bash
- poetry run pytest
+poetry run pytest
 ```
 
 ### Просмотр отчета о покрытии (Coverage)
 Чтобы проверить, насколько код покрыт тестами, и вывести отчет в терминал:
 ```bash
- poetry run pytest --cov
+poetry run pytest --cov
 ```
 
 Для генерации подробного HTML-отчета:
 ```bash
- poetry run pytest --cov=src --cov-report=html
+poetry run pytest --cov=src --cov-report=html
 
- После этого откройте файл `htmlcov/index.html` в любом браузере.
+После этого откройте файл `htmlcov/index.html` в любом браузере.
 ```
 
 ```
