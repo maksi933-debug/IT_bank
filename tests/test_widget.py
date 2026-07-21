@@ -6,6 +6,7 @@ from src.widget import get_date, mask_account_card
 
 # 1. ТЕСТЫ ДЛЯ ВИДЖЕТА (МАСКИРОВАНИЕ)
 
+
 def test_mask_account_card_valid(valid_card_and_account_strings: Tuple[str, str]) -> None:
     """Автоматически тестирует каждый корректный случай отдельно."""
     input_str, expected = valid_card_and_account_strings
@@ -19,6 +20,7 @@ def test_mask_account_card_invalid(invalid_mask_inputs: str) -> None:
 
 
 # 2. ТЕСТЫ ДЛЯ ДАТЫ
+
 
 def test_get_date_valid(valid_date_strings: Tuple[str, str]) -> None:
     """Автоматически тестирует каждый валидный случай даты отдельно."""

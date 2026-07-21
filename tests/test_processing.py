@@ -32,9 +32,7 @@ def test_filter_by_state_default_argument(sample_state_data: List[Dict[str, Any]
 
 
 @pytest.mark.parametrize("non_existent_state", ["FAILED", "UNKNOWN", ""])
-def test_filter_by_state_no_match(
-    sample_state_data: List[Dict[str, Any]], non_existent_state: str
-) -> None:
+def test_filter_by_state_no_match(sample_state_data: List[Dict[str, Any]], non_existent_state: str) -> None:
     """Проверяет, что возвращается пустой список, если статус отсутствует."""
     result = filter_by_state(sample_state_data, state=non_existent_state)
     assert result == []
@@ -74,9 +72,7 @@ def test_sort_by_date_identical_dates() -> None:
         ([{"id": 1, "date": "26-01-2026"}, {"id": 2, "date": "2026-01-26"}], [1, 2]),
     ],
 )
-def test_sort_by_date_invalid_formats(
-    invalid_data: List[Dict[str, Any]], expected_ids: List[int]
-) -> None:
+def test_sort_by_date_invalid_formats(invalid_data: List[Dict[str, Any]], expected_ids: List[int]) -> None:
     """Тесты на некорректные и нестандартные форматы дат."""
     result = sort_by_date(invalid_data, is_reverse=True)
     assert [item["id"] for item in result] == expected_ids

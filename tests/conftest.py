@@ -4,28 +4,26 @@ import pytest
 
 
 # ==================== ФИКСТУРЫ ДЛЯ КАРТ И СЧЕТОВ (masks) ====================
-@pytest.fixture(params=[
-    ('1234567812345678', '1234 56** **** 5678'),
-    ('4145863215377628', '4145 86** **** 7628'),
-    ('4464845444997515', '4464 84** **** 7515'),
-    ('6963200011116146', '6963 20** **** 6146'),
-    ('2502623184659746', '2502 62** **** 9746'),
-    ('9197365930646785', '9197 36** **** 6785'),
-])
+@pytest.fixture(
+    params=[
+        ("1234567812345678", "1234 56** **** 5678"),
+        ("4145863215377628", "4145 86** **** 7628"),
+        ("4464845444997515", "4464 84** **** 7515"),
+        ("6963200011116146", "6963 20** **** 6146"),
+        ("2502623184659746", "2502 62** **** 9746"),
+        ("9197365930646785", "9197 36** **** 6785"),
+    ]
+)
 def valid_card_numbers(request: pytest.FixtureRequest) -> Tuple[str, str]:
     return cast(Tuple[str, str], request.param)
 
 
-@pytest.fixture(params=[
-    (1234567890, '**7890'),
-    ('736541084305', '**4305'),
-    (64686473678894779589, '**9589')
-])
+@pytest.fixture(params=[(1234567890, "**7890"), ("736541084305", "**4305"), (64686473678894779589, "**9589")])
 def valid_account_numbers(request: pytest.FixtureRequest) -> Tuple[Any, str]:
     return cast(Tuple[Any, str], request.param)
 
 
-@pytest.fixture(params=[6468648574879343947386, '123456781234567890123'])
+@pytest.fixture(params=[6468648574879343947386, "123456781234567890123"])
 def too_long_account_numbers(request: pytest.FixtureRequest) -> Any:
     return request.param
 
@@ -36,6 +34,7 @@ def too_short_account_numbers(request: pytest.FixtureRequest) -> Any:
 
 
 # ==================== ФИКСТУРЫ ДЛЯ ВИДЖЕТА (widget) ====================
+
 
 @pytest.fixture(
     params=[
@@ -89,6 +88,7 @@ def invalid_date_strings(request: pytest.FixtureRequest) -> str:
 
 
 # ==================== ФИКСТУРЫ ДЛЯ ОБРАБОТКИ (processing) ====================
+
 
 @pytest.fixture
 def sample_state_data() -> List[Dict[str, Any]]:
