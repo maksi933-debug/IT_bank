@@ -110,3 +110,59 @@ def sample_date_data() -> List[Dict[str, Any]]:
         {"id": 2, "date": "2024-05-12T12:00:00"},
         {"id": 3, "date": "2026-12-01T08:30:00"},
     ]
+
+
+# ==================== ФИКСТУРЫ ДЛЯ ОБРАБОТКИ (generators) ====================
+
+
+@pytest.fixture
+def raw_transactions() -> list[dict[str, Any]]:
+    """Фикстура, предоставляющая тестовый список транзакций."""
+    return [
+        {
+            "id": 939719570,
+            "state": "EXECUTED",
+            "date": "2018-06-30T02:08:58.425572",
+            "operationAmount": {"amount": "9824.07", "currency": {"name": "USD", "code": "USD"}},
+            "description": "Перевод организации",
+        },
+        {
+            "id": 142264268,
+            "state": "EXECUTED",
+            "date": "2018-07-11T10:15:30.111222",
+            "operationAmount": {"amount": "1500.00", "currency": {"name": "USD", "code": "USD"}},
+            "description": "Перевод со счета на счет",
+        },
+        {
+            "id": 895315941,
+            "state": "EXECUTED",
+            "date": "2018-07-20T18:22:12.999888",
+            "operationAmount": {"amount": "450.50", "currency": {"name": "USD", "code": "USD"}},
+            "description": "Перевод со счета на счет",
+        },
+        {
+            "id": 594226727,
+            "state": "EXECUTED",
+            "date": "2018-08-05T14:01:05.123456",
+            "operationAmount": {"amount": "10500.00", "currency": {"name": "руб.", "code": "RUB"}},
+            "description": "Перевод с карты на карту",
+        },
+        {
+            "id": 873106923,
+            "state": "EXECUTED",
+            "date": "2018-09-12T21:27:25.241689",
+            "operationAmount": {"amount": "67314.70", "currency": {"name": "руб.", "code": "RUB"}},
+            "description": "Перевод организации",
+        },
+    ]
+
+
+@pytest.fixture(
+    params=[
+        {"currency": "USD", "expected_ids": [939719570, 142264268, 895315941]},
+        {"currency": "RUB", "expected_ids": [594226727, 873106923]},
+    ]
+)
+def currency_scenario(request: pytest.FixtureRequest) -> Any:
+    """Фикстура возвращает код валюты и ожидаемые ID транзакций."""
+    return request.param
