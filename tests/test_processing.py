@@ -3,10 +3,7 @@ from typing import Any, Dict, List
 import pytest
 
 from src.processing import filter_by_state, sort_by_date
-
 # ==================== ТЕСТЫ FILTER_BY_STATE ====================
-
-
 @pytest.mark.parametrize(
     "target_state, expected_ids",
     [
@@ -43,9 +40,61 @@ def test_filter_by_state_empty_list() -> None:
     assert filter_by_state([], state="EXECUTED") == []
 
 
+def test_filter_by_state_missing_key() -> None:
+    """Проверяет устойчивость к отсутствию ключа 'state' в некоторых элементах списка."""
+    mixed_data = [
+        {"id": 1, "state": "EXECUTED"},
+        {"id": 2},  # Ключ отсутствует
+        {"id": 3, "state": "EXECUTED"},
+    ]
+    result = filter_by_state(mixed_data, state="EXECUTED")
+    assert len(result) == 2
+    assert [item["id"] for item in result] == [1, 3]
+
+
+def test_filter_by_state_case_sensitivity() -> None:
+    """Проверяет, как функция реагирует на разный регистр букв в статусе state."""
+    data = [
+        {"id": 1, "state": "executed"},
+        {"id": 2, "state": "EXECUTED"},
+    ]
+    result = filter_by_state(data, state="EXECUTED")
+    assert [item["id"] for item in result] == [2]
+
+
+def test_filter_by_state_invalid_input_types() -> None:
+    """Проверяет поведение при передаче невалидных типов вместо ожидаемой строки в state.
+    Поскольку используется метод ==, код не упадет, а просто вернет пустой список.
+    """
+    data = [{"id": 1, "state": "EXECUTED"}]
+    """ Передаем список, число или None вместо строки в аргумент state"""
+    assert filter_by_state(data, state=123) == []
+    assert filter_by_state(data, state=None) == []
+    assert filter_by_state(data, state=["EXECUTED"]) == []
+
+
+def test_filter_by_state_elements_are_not_dicts() -> None:
+    """Критическая ошибка данных: если в списке data лежат не словари, а другие типы.
+    У них нет метода .get(), поэтому код должен упасть с AttributeError.
+    """
+    bad_data = [
+        {"id": 1, "state": "EXECUTED"},
+        "я строка, а не словарь",
+    ]
+    with pytest.raises(AttributeError):
+        filter_by_state(bad_data)
+
+
+def test_filter_by_state_branch_coverage() -> None:
+    """Проверяет обе ветки условия внутри генератора списков (выполняется/пропускается)."""
+    mixed_data = [
+        {"id": 1, "state": "EXECUTED"},
+        {"id": 2, "state": "CANCELED"},
+    ]
+    result = filter_by_state(mixed_data, state="EXECUTED")
+    assert len(result) == 1
+
 # ==================== ТЕСТЫ SORT_BY_DATE ====================
-
-
 def test_sort_by_date_order(sample_date_data: List[Dict[str, Any]]) -> None:
     """Тестирует сортировку по убыванию и возрастанию дат."""
     result_desc = sort_by_date(sample_date_data)
@@ -79,7 +128,80 @@ def test_sort_by_date_invalid_formats(invalid_data: List[Dict[str, Any]], expect
 
 
 def test_sort_by_date_type_error() -> None:
-    """Критический случай: Смешанные типы данных (вызовет TypeError)."""
-    mixed_data: List[Dict[str, Any]] = [{"id": 1, "date": "2026-01-01"}, {"id": 2, "date": 12345}]
+    """Проверяет вызов TypeError при сравнении строки и числа."""
+    mixed_data = [
+        {"id": 1, "date": "2026-01-01"},
+        {"id": 2, "date": 12345}]
     with pytest.raises(TypeError):
         sort_by_date(mixed_data)
+
+def test_sort_by_date_completely_missing_keys() -> None:
+    """Проверяет сортировку элементов, в которых вообще нет ключа 'date'."""
+    data = [
+        {"id": 1},
+        {"id": 2},
+    ]
+    result = sort_by_date(data)
+    assert len(result) == 2
+
+
+def test_sort_by_date_empty_list() -> None:
+    """Проверяет поведение функции сортировки при передаче пустого списка."""
+    assert sort_by_date([]) == []
+
+
+def test_sort_by_date_does_not_mutate_original_list(sample_date_data: List[Dict[str, Any]]) -> None:
+    """Проверяет, что функция возвращает новый список и не изменяет (не мутирует) исходный."""
+    original_copy = sample_date_data.copy()
+    sort_by_date(sample_date_data)
+    assert sample_date_data == original_copy
+
+
+def test_sort_by_date_all_elements_missing_date() -> None:
+    """Критический случай: у всех элементов отсутствует ключ 'date'.
+    Код вернет пустые строки для всех, и список останется в исходном порядке.
+    """
+    data = [{"id": 3}, {"id": 1}, {"id": 2}]
+    result = sort_by_date(data, is_reverse=True)
+    assert [item["id"] for item in result] == [3, 1, 2]
+
+
+@pytest.mark.parametrize(
+    "corrupted_data",
+    [
+        [{"id": 1, "date": None}],
+        [{"id": 1, "date": []}],
+        [{"id": 1, "date": {"year": 2026}}],],)
+def test_sort_by_date_invalid_types_in_key(corrupted_data: List[Dict[str, Any]]) -> None:
+    """Проверяет, что передача неподдерживаемых для сравнения со строкой типов
+    (None, list, dict) вызывает TypeError при попытке сортировки с дефолтной строкой.
+    """
+    corrupted_data.append({"id": 2, "date": "2026-01-01"})
+    with pytest.raises(TypeError):
+        sort_by_date(corrupted_data)
+
+
+def test_sort_by_date_with_boolean_date() -> None:
+    """Особый случай в Python: bool является подтипом int (True == 1, False == 0).
+    Сравнение строки и bool вызовет TypeError."""
+    data = [{"id": 1, "date": "2026-01-01"}, {"id": 2, "date": True}]
+    with pytest.raises(TypeError):
+        sort_by_date(data)
+
+
+def test_sort_by_date_elements_are_not_dicts() -> None:
+    """Если в sort_by_date придет список строк вместо словарей,
+    лямбда-функция вызовет AttributeError при попытке вызвать .get().
+    """
+    bad_data = ["2026-01-01", "2026-01-02"]
+    with pytest.raises(AttributeError):
+        sort_by_date(bad_data)
+
+
+def test_filter_and_sort_huge_ids() -> None:
+    """Проверка работы с экстремально большими числами (overflow check) в id,
+    чтобы убедиться, что python-типы их переваривают."""
+    huge_data = [
+        {"id": 999999999999999999999999999, "state": "EXECUTED", "date": "2026-01-01"}]
+    assert len(filter_by_state(huge_data)) == 1
+    assert len(sort_by_date(huge_data)) == 1

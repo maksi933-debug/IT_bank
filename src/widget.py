@@ -38,22 +38,3 @@ def get_date(date_str: str) -> str:
 
     # Форматируем объект в строку нужного вида
     return date_obj.strftime("%d.%m.%Y")
-
-
-if __name__ == "__main__":
-    print("--- Проверка маскировки карт и счетов ---")
-    cards_and_accounts = [
-        "Maestro 1596837868705199",
-        "Счет 64686473678894779589",
-        "MasterCard 7158300734726758",
-        "Visa Platinum 8990922113665229",
-        "Счет 73654108430135874305",
-    ]
-
-    for item in cards_and_accounts:
-        print(mask_account_card(item))
-
-    print("\n--- Проверка форматирования даты ---")
-    test_date = "2026-06-12T14:16:18.671407"
-    print(f"Исходная дата: {test_date}")
-    print(f"Результат:     {get_date(test_date)}")
