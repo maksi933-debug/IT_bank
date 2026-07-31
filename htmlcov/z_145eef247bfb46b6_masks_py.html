@@ -65,7 +65,7 @@
             <a id="nextFileLink" class="nav" href="z_145eef247bfb46b6_processing_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.15.2">coverage.py v7.15.2</a>,
-            created at 2026-07-31 10:53 +0300
+            created at 2026-07-31 11:13 +0300
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"></button>
@@ -92,7 +92,7 @@
     <p class="run"><span class="n"><a id="t10" href="#t10">10</a></span><span class="t">    <span class="key">if</span> <span class="nam">len</span><span class="op">(</span><span class="nam">card_number</span><span class="op">)</span> <span class="op">!=</span> <span class="num">16</span> <span class="key">or</span> <span class="key">not</span> <span class="nam">card_number</span><span class="op">.</span><span class="nam">isdigit</span><span class="op">(</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t11" href="#t11">11</a></span><span class="t">        <span class="key">raise</span> <span class="nam">ValueError</span><span class="op">(</span><span class="str">"&#1053;&#1086;&#1084;&#1077;&#1088; &#1082;&#1072;&#1088;&#1090;&#1099; &#1076;&#1086;&#1083;&#1078;&#1077;&#1085; &#1089;&#1086;&#1089;&#1090;&#1086;&#1103;&#1090;&#1100; &#1088;&#1086;&#1074;&#1085;&#1086; &#1080;&#1079; 16 &#1094;&#1080;&#1092;&#1088;"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t12" href="#t12">12</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t13" href="#t13">13</a></span><span class="t">    <span class="key">return</span> <span class="str">f"{card_number[:4]} {card_number[4:6]}** **** {card_number[12:]}"</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t13" href="#t13">13</a></span><span class="t">    <span class="key">return</span> <span class="fst">f"</span><span class="op">{</span><span class="nam">card_number</span><span class="op">[</span><span class="op">:</span><span class="num">4</span><span class="op">]</span><span class="op">}</span><span class="fst"> </span><span class="op">{</span><span class="nam">card_number</span><span class="op">[</span><span class="num">4</span><span class="op">:</span><span class="num">6</span><span class="op">]</span><span class="op">}</span><span class="fst">** **** </span><span class="op">{</span><span class="nam">card_number</span><span class="op">[</span><span class="num">12</span><span class="op">:</span><span class="op">]</span><span class="op">}</span><span class="fst">"</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t14" href="#t14">14</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t15" href="#t15">15</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t16" href="#t16">16</a></span><span class="t"><span class="key">def</span> <span class="nam">get_mask_account</span><span class="op">(</span><span class="nam">account_number</span><span class="op">:</span> <span class="nam">Union</span><span class="op">[</span><span class="nam">int</span><span class="op">,</span> <span class="nam">str</span><span class="op">]</span><span class="op">)</span> <span class="op">-></span> <span class="nam">str</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
@@ -109,7 +109,7 @@
     <p class="run"><span class="n"><a id="t27" href="#t27">27</a></span><span class="t">    <span class="key">if</span> <span class="nam">len</span><span class="op">(</span><span class="nam">account_str</span><span class="op">)</span> <span class="op">&lt;</span> <span class="num">4</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t28" href="#t28">28</a></span><span class="t">        <span class="key">raise</span> <span class="nam">ValueError</span><span class="op">(</span><span class="str">"&#1053;&#1086;&#1084;&#1077;&#1088; &#1089;&#1095;&#1077;&#1090;&#1072; &#1089;&#1083;&#1080;&#1096;&#1082;&#1086;&#1084; &#1082;&#1086;&#1088;&#1086;&#1090;&#1082;&#1080;&#1081; (&#1084;&#1080;&#1085;&#1080;&#1084;&#1091;&#1084; 4 &#1094;&#1080;&#1092;&#1088;&#1099;)"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t29" href="#t29">29</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t30" href="#t30">30</a></span><span class="t">    <span class="key">return</span> <span class="str">f"**{account_str[-4:]}"</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t30" href="#t30">30</a></span><span class="t">    <span class="key">return</span> <span class="fst">f"</span><span class="fst">**</span><span class="op">{</span><span class="nam">account_str</span><span class="op">[</span><span class="op">-</span><span class="num">4</span><span class="op">:</span><span class="op">]</span><span class="op">}</span><span class="fst">"</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t31" href="#t31">31</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t32" href="#t32">32</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t33" href="#t33">33</a></span><span class="t"><span class="com"># === &#1041;&#1051;&#1054;&#1050; &#1047;&#1040;&#1055;&#1059;&#1057;&#1050;&#1040; &#1050;&#1054;&#1044;&#1040; ===</span>&nbsp;</span><span class="r"></span></p>
@@ -129,7 +129,7 @@
             <a class="nav" href="z_145eef247bfb46b6_processing_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.15.2">coverage.py v7.15.2</a>,
-            created at 2026-07-31 10:53 +0300
+            created at 2026-07-31 11:13 +0300
         </p>
     </div>
 </footer>
