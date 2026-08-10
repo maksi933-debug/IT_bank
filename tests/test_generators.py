@@ -5,6 +5,7 @@ import pytest
 
 from src.generators import card_number_generator, filter_by_currency, transaction_descriptions
 
+
 # ТЕСТИРОВАНИЕ filter_by_currency
 def test_filter_by_currency_with_fixture(
     raw_transactions: list[dict[str, Any]], currency_scenario: dict[str, Any]
@@ -41,7 +42,7 @@ def test_filter_by_currency_missing_keys() -> None:
         {"id": 2, "operationAmount": {}},  # Нет ключа currency
         {"id": 3, "operationAmount": {"currency": {"code": "USD"}}},  # Корректный
     ]
-    result_gen = filter_by_currency(bad_transactions, "USD")
+    result_gen = filter_by_currency(bad_transactions, "USD")  # type: ignore
     """Ожидаем, что функция либо пропускает битые данные, либо вы обрабатываете это
     Если функция падает на KeyError, этот тест зафиксирует текущее поведение"""
     result = list(result_gen)
@@ -52,8 +53,9 @@ def test_filter_by_currency_missing_keys() -> None:
 def test_filter_by_currency_lazy_evaluation() -> None:
     """Проверяем, что генератор ленивый и не считывает данные до итерации."""
     """Передаем объект, который вызовет ошибку только при попытке чтения"""
+
     class BrokenList:
-        def __iter__(self):
+        def __iter__(self) -> None:
             raise ValueError("Данные начали считываться слишком рано!")
 
     """Вызов функции не должен вызывать ошибку, так как возвращается генератор"""
@@ -91,11 +93,8 @@ def test_transaction_descriptions_single_item() -> None:
 
 def test_transaction_descriptions_missing_key() -> None:
     """Проверяем поведение, если в транзакции нет ключа description."""
-    transactions = [
-        {"id": 1, "description": "Перевод"},
-        {"id": 2}  # Ключ отсутствует
-    ]
-    descr_gen = transaction_descriptions(transactions)
+    transactions = [{"id": 1, "description": "Перевод"}, {"id": 2}]  # Ключ отсутствует
+    descr_gen = transaction_descriptions(transactions)  # type: ignore
     """ функция возвращает пустую строку, None или падает."""
 
     result = list(descr_gen)
