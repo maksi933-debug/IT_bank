@@ -1,5 +1,5 @@
 from collections.abc import Iterator
-from typing import Any, Dict, Generator, List
+from typing import Any, Dict
 
 
 def filter_by_currency(transactions: list[Dict[str, Any]], currency: str = "USD") -> Iterator[Dict[str, Any]]:
