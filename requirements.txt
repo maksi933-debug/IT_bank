@@ -1,6 +1,11 @@
 # Основные зависимости проекта
 union
 typing-extensions
+dotenv
+requests
+python-dotenv
+typing_extensions
+logging
 
 # Группа dev (Инструменты разработки и тестирования)
 flake8
