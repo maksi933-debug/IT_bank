@@ -3,39 +3,39 @@ import os
 from pathlib import Path
 from typing import Union
 
-# --- НАСТРОЙКА АБСОЛЮТНОГО ПУТИ С АВТО-СОЗДАНИЕМ ПАПКИ ---
 current_dir = os.path.dirname(os.path.abspath(__file__))
+"""Настройка абсолютного пути с авто-созданием папки"""
 project_root = os.path.dirname(current_dir)
 
-# Чтобы не зависеть от структуры, принудительно целимся в корень проекта:
-logs_dir = os.path.join(project_root, "logs")
 
-# Если папки logs в корне проекта по какой-то причине нет, создаем её
+logs_dir = os.path.join(project_root, "logs")
+"""Определение абсолютного пути относительно корня проекта"""
+
 if not os.path.exists(logs_dir):
     os.makedirs(logs_dir)
-
+"""Если папки logs в корне проекта по какой-то причине нет, создаем её"""
 logfile_path = os.path.join(logs_dir, "masks.log")
 
-# 2. Создан отдельный объект логера для модуля masks
 logger = logging.getLogger(__name__)
+"""Создан отдельный объект логера для модуля masks"""
 
-# 3. Установлен уровень логирования для логера модуля masks не меньше, чем DEBUG
 logger.setLevel(logging.DEBUG)
+"""Установлен уровень логирования для логера модуля masks не меньше, чем DEBUG"""
 
-# 4. Настроен file_handler для логера модуля masks
 file_handler = logging.FileHandler(logfile_path, "w", encoding="utf-8")
+"""Настраиваем file_handler для логера модуля masks"""
 
-# !!! ВАЖНО: Явно разрешаем хэндлеру записывать уровень DEBUG в файл
 file_handler.setLevel(logging.DEBUG)
 
-# 5. Настроен file_formatter (формат включает: метку времени, название модуля, уровень серьезности и сообщение)
-file_formatter = logging.Formatter("%(asctime)s %(name)s [%(levelname)s]: %(message)s")
 
-# 6. Установлен форматер для логера модуля masks
+file_formatter = logging.Formatter("%(asctime)s %(name)s [%(levelname)s]: %(message)s")
+"""Настроен file_formatter (формат включает: метку времени, название модуля, уровень серьезности и сообщение"""
+
 file_handler.setFormatter(file_formatter)
 
-# 7. Добавлен handler для логера модуля masks
+
 logger.addHandler(file_handler)
+"""Добавлен handler для логера модуля masks"""
 
 
 def get_mask_card_number(card_number: str) -> str:

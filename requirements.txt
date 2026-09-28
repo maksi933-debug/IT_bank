@@ -5,6 +5,8 @@ dotenv
 requests
 python-dotenv
 typing_extensions
+logging
+
 # Группа dev (Инструменты разработки и тестирования)
 flake8
 pytest
