@@ -53,6 +53,7 @@ def test_get_transactions_success() -> None:
 
 # === ТЕСТЫ ДЛЯ ДЕКОРАТОРА stat_decorator ===
 
+
 def test_stat_decorator_stdout(capsys: pytest.CaptureFixture[str]) -> None:
     """Тест: декоратор корректно считает сумму и выводит статистику в консоль.
 

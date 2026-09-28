@@ -1,6 +1,32 @@
 import json
+import logging
 import os
 from typing import Any, Callable, Dict, List
+
+# --- НАСТРОЙКА ПУТИ К ФАЙЛУ В СУЩЕСТВУЮЩЕЙ ПАПКЕ LOGS ---
+current_dir = os.path.dirname(os.path.abspath(__file__))  # папка src
+project_root = os.path.dirname(current_dir)  # корень проекта
+logfile_path = os.path.join(project_root, "logs", "utils.log")
+
+# --- НАСТРОЙКА ЛОГИРОВАНИЯ ПО ТРЕБОВАНИЯМ SKYPRO ---
+# 1. Создан отдельный объект логера для модуля utils
+logger = logging.getLogger(__name__)
+
+# 2. Установлен уровень логирования для логера модуля utils не меньше, чем DEBUG
+logger.setLevel(logging.DEBUG)
+
+# 3. Настроен file_handler для логера модуля utils
+file_handler = logging.FileHandler(logfile_path, "w", encoding="utf-8")
+file_handler.setLevel(logging.DEBUG)
+
+# 4. Настроен file_formatter (включает метку времени, название модуля, уровень серьезности и сообщение)
+file_formatter = logging.Formatter("%(asctime)s %(name)s [%(levelname)s]: %(message)s", datefmt="%Y-%m-%d %H:%M:%S")
+
+# 5. Установлен форматер для логера модуля utils
+file_handler.setFormatter(file_formatter)
+
+# 6. Добавлен handler для логера модуля utils
+logger.addHandler(file_handler)
 
 
 def get_financial_transactions(file_path: str) -> List[Dict[str, Any]]:
@@ -14,16 +40,28 @@ def get_financial_transactions(file_path: str) -> List[Dict[str, Any]]:
             Если файл пустой, поврежден или не содержит список,
             возвращается пустой список [].
     """
+    # Логирование успешного старта функции
+    logger.debug(f"Попытка чтения транзакций из файла: {file_path}")
+
     if not os.path.exists(file_path):
+        # Ошибочный случай: уровень не ниже ERROR
+        logger.error(f"Файл не найден по пути: {file_path}")
         return []
 
     try:
         with open(file_path, "r", encoding="utf-8") as file:
             data: Any = json.load(file)
             if isinstance(data, list):
+                # Логирование успешного выполнения функции
+                logger.debug(f"Успешно прочитано транзакций: {len(data)}")
                 return data
+
+            # Ошибочный случай: структура не является списком
+            logger.error("Ошибка структуры: JSON-файл не содержит список")
             return []
-    except (json.JSONDecodeError, TypeError, OSError):
+    except (json.JSONDecodeError, TypeError, OSError) as e:
+        # Ошибочный случай: уровень не ниже ERROR
+        logger.error(f"Ошибка при обработке JSON-файла: {str(e)}")
         return []
 
 
@@ -45,7 +83,7 @@ def stat_decorator(
         total_amount: float = 0.0
         for transaction in filtered_transactions:
             if not isinstance(transaction, dict):
-                continue                            # type: ignore[unreachable]
+                continue  # type: ignore[unreachable]
 
             amount_data: Any = transaction.get("operationAmount")
             if isinstance(amount_data, dict):
@@ -56,10 +94,15 @@ def stat_decorator(
             try:
                 if amount_value is not None:
                     total_amount += float(amount_value)
-            except (ValueError, TypeError):
+            except (ValueError, TypeError) as e:
+                # Ошибочный случай: логирование невалидных сумм
+                logger.error(f"Не удалось преобразовать сумму транзакции в float: {str(e)}")
                 continue
 
-        print(f"Отфильтровано {len(filtered_transactions)} транзакций на сумму {total_amount:.2f}")
+        stats_message = f"Отфильтровано {len(filtered_transactions)} транзакций на сумму {total_amount:.2f}"
+        print(stats_message)
+        # Дополнительно фиксируем итоговую статистику в логи модуля
+        logger.debug(stats_message)
         return filtered_transactions
 
     return wrapper
@@ -71,12 +114,14 @@ def filter_transactions_by_currency(input_file: str, output_file: str, currency:
 
     Args:
         input_file (str): Путь к исходному файлу JSON с транзакциями.
-        output_file (str): Путь для сохранения отфильтрованных транзакций.
+        output_file (str): Путь для保存ения отфильтрованных транзакций.
         currency (str): Код валюты для фильтрации (например, 'RUB', 'USD').
 
     Returns:
         List[Dict[str, Any]]: Список отфильтрованных транзакций.
     """
+    # Логирование успешного старта функции
+    logger.debug(f"Запуск фильтрации транзакций по валюте '{currency}'")
     transactions: List[Dict[str, Any]] = get_financial_transactions(input_file)
 
     filtered_transactions: List[Dict[str, Any]] = []
@@ -98,14 +143,17 @@ def filter_transactions_by_currency(input_file: str, output_file: str, currency:
         # Никаких сложных ветвлений — чистая линейная логика для mypy.
         curr_code = inner_code or str(transaction.get("currency", ""))
 
-        if curr_code == currency: # mypy: ignore[unreachable]
+        if curr_code == currency:  # mypy: ignore[unreachable]
             filtered_transactions.append(transaction)
 
     try:
         with open(output_file, "w", encoding="utf-8") as f:
             json.dump(filtered_transactions, f, indent=4, ensure_ascii=False)
-    except OSError:
-        pass
+        # Логирование успешного исхода операции
+        logger.debug(f"Отфильтрованные транзакции успешно сохранены в файл: {output_file}")
+    except OSError as e:
+        # Ошибочный случай: уровень не ниже ERROR
+        logger.error(f"Не удалось записать результат фильтрации в файл {output_file}: {str(e)}")
 
     return filtered_transactions
 
