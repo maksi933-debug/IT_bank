@@ -6,7 +6,7 @@ requests
 python-dotenv
 typing_extensions
 logging
-
+pandas
 # Группа dev (Инструменты разработки и тестирования)
 flake8
 pytest
