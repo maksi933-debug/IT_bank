@@ -5,7 +5,6 @@ from unittest.mock import MagicMock, mock_open, patch
 
 import pytest
 
-
 from src.utils import (
     filter_transactions_by_currency,
     get_financial_transactions,
