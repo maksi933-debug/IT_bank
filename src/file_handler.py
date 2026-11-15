@@ -24,9 +24,7 @@ def excel_data_reader(path_to_file: str | Path) -> list[dict[str, Any]]:
         if "id" in row and row["id"] != "":
             row["id"] = int(row["id"])
         if "amount" in row and row["amount"] != "":
-            row["amount"] = (
-                int(row["amount"]) if row["amount"] % 1 == 0 else row["amount"]
-            )
+            row["amount"] = int(row["amount"]) if row["amount"] % 1 == 0 else row["amount"]
 
     return data
 

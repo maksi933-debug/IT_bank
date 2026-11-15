@@ -8,7 +8,6 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 project_root = os.path.dirname(current_dir)
 logfile_path = os.path.join(project_root, "logs", "utils.log")
 
-# Создаем папку logs автоматически, если её еще нет
 os.makedirs(os.path.dirname(logfile_path), exist_ok=True)
 
 logger = logging.getLogger(__name__)
@@ -55,9 +54,6 @@ def stat_decorator(
 
         total_amount: float = 0.0
         for transaction in filtered_transactions:
-            if not isinstance(transaction, dict):
-                continue
-
             amount_data: Any = transaction.get("operationAmount")
             if isinstance(amount_data, dict):
                 amount_value: Any = amount_data.get("amount")
@@ -83,7 +79,7 @@ def stat_decorator(
 def filter_transactions_by_currency(input_file: str, output_file: str, currency: str) -> List[Dict[str, Any]]:
     """Фильтрует транзакции по коду валюты и сохраняет результат в файл JSON."""
     logger.debug(f"Запуск фильтрации транзакций по валюте '{currency}'")
-    transactions: List[Dict[str, Any]] = get_financial_transactions(input_file)
+    transactions: List[Any] = get_financial_transactions(input_file)
 
     filtered_transactions: List[Dict[str, Any]] = []
     for transaction in transactions:

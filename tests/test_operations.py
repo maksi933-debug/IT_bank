@@ -1,10 +1,12 @@
+from typing import Any
+
 import pytest
 
 from src.operations import process_bank_operations, process_bank_search
 
 
 @pytest.fixture
-def sample_transactions() -> list[dict]:
+def sample_transactions() -> list[dict[str, Any]]:
     """Фикстура с набором тестовых банковских операций."""
     return [
         {"id": 1, "description": "Перевод организации"},
@@ -12,7 +14,7 @@ def sample_transactions() -> list[dict]:
         {"id": 3, "description": "Перевод организации"},
         {"id": 4, "description": "Перевод с карты на карту"},
         {"id": 5, "description": None},
-        {"id": 6},  # Операция без ключа description
+        {"id": 6},
     ]
 
 
@@ -20,13 +22,13 @@ def sample_transactions() -> list[dict]:
     ("search_query", "expected_ids"),
     [
         ("Перевод организации", [1, 3]),
-        ("открытие вклада", [2]),  # Проверка регистронезависимости
-        ("ПЕРЕВОД", [1, 3, 4]),    # Поиск по частичному совпадению
-        ("Несуществующая", []),    # Ничего не найдено
+        ("открытие вклада", [2]),
+        ("ПЕРЕВОД", [1, 3, 4]),
+        ("Несуществующая", []),
     ],
 )
 def test_process_bank_search(
-    sample_transactions: list[dict], search_query: str, expected_ids: list[int]
+    sample_transactions: list[dict[str, Any]], search_query: str, expected_ids: list[int]
 ) -> None:
     """Тестирование поиска операций по строке описания."""
     result = process_bank_search(sample_transactions, search_query)
@@ -38,7 +40,7 @@ def test_process_bank_search_empty_data() -> None:
     assert process_bank_search([], "Перевод") == []
 
 
-def test_process_bank_operations(sample_transactions: list[dict]) -> None:
+def test_process_bank_operations(sample_transactions: list[dict[str, Any]]) -> None:
     """Тестирование подсчета операций по заданным категориям."""
     categories = ["Перевод организации", "Открытие вклада", "Оплата услуг"]
     expected = {

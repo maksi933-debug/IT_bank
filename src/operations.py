@@ -1,8 +1,9 @@
-from collections import Counter
 import csv
 import json
-from pathlib import Path
 import re
+from collections import Counter
+from pathlib import Path
+from typing import Any
 
 
 def csv_to_json(csv_file_path: Path, json_file_path: Path) -> None:
@@ -17,7 +18,7 @@ def csv_to_json(csv_file_path: Path, json_file_path: Path) -> None:
         json.dump(transactions, json_file, ensure_ascii=False, indent=4)
 
 
-def process_bank_search(data: list[dict], search: str) -> list[dict]:
+def process_bank_search(data: list[dict[str, Any]], search: str) -> list[dict[str, Any]]:
     """Возвращает список словарей, у которых в описании есть заданная строка."""
     result = []
     pattern = re.compile(re.escape(search), re.IGNORECASE)
@@ -30,16 +31,12 @@ def process_bank_search(data: list[dict], search: str) -> list[dict]:
     return result
 
 
-def process_bank_operations(data: list[dict], categories: list) -> dict:
+def process_bank_operations(data: list[dict[str, Any]], categories: list[str]) -> dict[str, int]:
     """
     Принимает список словарей с операциями и список категорий.
     Возвращает словарь с количеством операций для каждой заданной категории.
     """
-    descriptions = [
-        item.get("description")
-        for item in data
-        if isinstance(item.get("description"), str)
-    ]
+    descriptions = [item.get("description") for item in data if isinstance(item.get("description"), str)]
 
     counted_descriptions = Counter(descriptions)
 
