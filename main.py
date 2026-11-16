@@ -74,8 +74,7 @@ def apply_filters(transactions: list[dict[str, Any]]) -> list[dict[str, Any]]:
         transactions = [
             t
             for t in transactions
-            if t.get("currency_code") == "RUB"
-            or t.get("operationAmount", {}).get("currency", {}).get("code") == "RUB"
+            if t.get("currency_code") == "RUB" or t.get("operationAmount", {}).get("currency", {}).get("code") == "RUB"
         ]
 
     print("Отфильтровать список транзакций по определенному слову в описании? Да/Нет")
